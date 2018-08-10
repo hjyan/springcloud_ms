@@ -41,7 +41,7 @@
             <version>${druid.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.hongdian.sys</groupId>
+            <groupId>com.zyyan.ms</groupId>
             <artifactId>common</artifactId>
             <version>${common.version}</version>
             <optional>true</optional>

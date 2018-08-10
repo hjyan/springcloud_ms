@@ -57,12 +57,12 @@ eureka:
     
 #mybatis:
 #  mapper-locations: classpath:mapping/oracle/*.xml
-#  type-aliases-package: com.hongdian.sys.auth.entity
+#  type-aliases-package: com.zyyan.ms.auth.entity
 
 mybatis-plus:
   mapper-locations: classpath:com/hongdian/sys/auth/mapper/xml/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.hongdian.sys.auth.entity
+  typeAliasesPackage: com.zyyan.ms.auth.entity
   typeHandlersPackage: com.ithings.xw.mybatis.handler
   global-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";

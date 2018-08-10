@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.hongdian</groupId>
+	<groupId>com.zyyan</groupId>
 	<artifactId>mqtt-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -19,7 +19,7 @@
 	</parent>
 
 <!--	<parent>
-		<groupId>com.hongdian.sys</groupId>
+		<groupId>com.zyyan.ms</groupId>
 		<artifactId>alarmBC</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>-->

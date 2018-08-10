@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyyan.ms.term.mapper.FloodVoxRelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyyan.ms.term.entity.FloodVoxRel">
+        <id column="ID" property="id" />
+        <result column="GATE" property="gate" />
+    </resultMap>
+    
+    <insert id="insertFloodVoxRel" parameterType="com.zyyan.ms.term.entity.FloodVoxRel" >
+        insert into flood_vox_rel(id,gate) VALUES(#{id},#{gate})
+    </insert>
+    
+    <!-- 删除语句 -->
+    <delete id="deleteFloodVoxRelByIdAndGate" parameterType="java.util.HashMap">
+        DELETE FROM flood_vox_rel where 1=1 and id=#{id} and gate=#{gate}
+    </delete>
+    
+</mapper>

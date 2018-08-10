@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.plat.term.mapper.TermParamValueMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.hongdian.plat.term.entity.TermParamValue">
+		<id column="TERM_SN" property="termSn" />
+		<result column="TAG" property="tag" />
+		<result column="GROUP_ID" property="groupId" />
+		<result column="VALUE" property="value" />
+	</resultMap>
+	
+	<resultMap id="DtoResultMap" type="com.hongdian.plat.term.dto.TermParamDto">
+		<!--value-->
+		<result column="TERM_SN" property="value.termSn" />
+		<result column="TAG" property="value.tag" />
+		<result column="GROUP_ID" property="value.groupId" />
+		<result column="VALUE" property="value.value" />
+		<!--paramInfo-->		
+		<result column="PARAM_ID" property="info.id" />
+		<result column="PARAM_NAME" property="info.name" />
+		<result column="SHORT_NAME" property="info.shortName" />
+		<result column="MIN_LEN" property="info.minLen" />
+		<result column="MAX_LEN" property="info.maxLen" />
+		<result column="MIN_VALUE" property="info.minValue" />
+		<result column="MAX_VALUE" property="info.maxValue" />
+		<result column="VALUE_TYPE" property="info.valueType" />
+		<result column="COMBO_VALUE" property="info.comboValue" />
+		<result column="DEFAULT_VALUE" property="info.defaultValue" />
+		<result column="READONLY" property="info.readonly" />
+		<result column="ALLOW_NULL" property="info.allowNull" />
+		<result column="IS_VISIBLE" property="info.isVisible" />
+		<!--group-->
+		<result column="G_ID" property="group.id" />
+		<result column="GROUP_NAME" property="group.name" />
+		<result column="PID" property="group.pid" />
+		<result column="STATUS" property="group.status" />
+		<result column="EXPAND" property="group.expand" />
+		<!--term-->
+		<result column="TERM_TYPE_ID" property="term.termTypeId" />
+		<result column="TERM_STD_ID" property="term.termStdId" />
+		<result column="TERM_MODEL" property="term.termModel" />
+		<result column="TERM_VERSION" property="term.termVersion" />
+		<result column="STATION_ID" property="term.stationId" />
+	</resultMap>
+	
+	<select id="selectTermParamDtoList" parameterType="java.util.HashMap" resultMap="DtoResultMap" resultType="com.hongdian.plat.term.dto.TermParamDto">
+		select * from term_param_value obj
+		left join term tm on tm.sn=obj.term_sn
+		left join ( select tpi.id PARAM_ID, tpi.TAG, tpi.GROUP_ID group_id_2, tpi.NAME PARAM_NAME, tpi.SHORT_NAME, tpi.MIN_LEN, tpi.MAX_LEN, tpi.MIN_VALUE, tpi.MAX_VALUE,
+		tpi.VALUE_TYPE, tpi.COMBO_VALUE, tpi.DEFAULT_VALUE, tpi.READONLY, tpi.ALLOW_NULL, tpi.IS_VISIBLE,
+		tpg.id g_id, tpg.name group_name, tpg.group_id, tpg.term_type_id, tpg.term_model_id
+		from term_param_info tpi
+		left join term_param_group tpg on tpg.id = tpi.group_id 
+		) info on info.term_type_id=tm.TERM_TYPE_ID and info.term_model_id = tm.term_model and obj.tag=info.tag and obj.group_id=info.group_id
+		<include refid="dy_where" />
+	</select>
+	
+	<insert id="replaceBatch" parameterType="java.util.List">
+		REPLACE INTO term_param_value (term_sn, tag, group_id, value) VALUES
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.termSn},#{item.tag},#{item.groupId},#{item.value})
+		</foreach>
+	</insert>
+	
+	<sql id="dy_where">
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="null != termSn and '' != termSn">
+				AND obj.term_sn = #{termSn}
+			</if>
+		</trim>
+	</sql>
+	
+    
+</mapper>

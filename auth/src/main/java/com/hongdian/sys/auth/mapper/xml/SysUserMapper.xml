@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.sys.auth.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hongdian.sys.auth.entity.SysUser">
+        <id column="ID" property="id" />
+        <result column="DEPT_ID" property="deptId" />
+        <result column="ADCD" property="adcd" />
+        <result column="EMAIL" property="email" />
+        <result column="ROLE_ID" property="roleId" />
+        <result column="IS_ENABLED" property="isEnabled" />
+        <result column="PHONE" property="phone" />
+        <result column="ACTIVE_END_DATE" property="activeEndDate" />
+        <result column="ACTIVE_BEGIN_DATE" property="activeBeginDate" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR" property="creator" />
+        <result column="PWD" property="pwd" />
+        <result column="NAME" property="name" />
+    </resultMap>
+    
+    <!--查询dto-->
+    <resultMap id="DtoResultMap" type="com.hongdian.sys.auth.dto.SysUserDto" extends="BaseResultMap">
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="adnm" column="ADNM"/>
+        <!--角色列表-->
+        <collection property="roleList" javaType="ArrayList"
+                    column="{userId=ID}"
+                    ofType="com.hongdian.sys.auth.entity.SysRole" select="selectRoleList" />
+    </resultMap>
+    
+    <!--查询用户角色列表-->
+    <resultMap id="result_roles" type="com.hongdian.sys.auth.entity.SysRole">
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+    </resultMap>
+    
+    <select id="selectDtoList" parameterType="java.util.HashMap" resultMap="DtoResultMap" resultType="com.hongdian.sys.auth.dto.SysUserDto">
+        SELECT obj.*, ad.NAME AS ADNM, dept.NAME AS DEPT_NAME FROM SYS_USER obj
+        <!--根据角色过滤-->
+        <if test="null != roleId">
+            LEFT JOIN (SELECT * FROM SYS_USER_ROLE sur_temp WHERE sur_temp.ROLE_ID = #{roleId}) sur ON sur.USER_ID = obj.ID
+        </if>
+        LEFT JOIN SYS_AD ad ON obj.ADCD = ad.CODE
+        LEFT JOIN SYS_DEPT dept ON obj.DEPT_ID = dept.CODE
+        <include refid="dy_where" />
+    </select>
+    
+    <select id="selectRoleList" parameterType="java.util.HashMap" resultMap="result_roles" resultType="com.hongdian.sys.auth.entity.SysRole">
+        SELECT role.ID, role.NAME FROM SYS_USER_ROLE obj
+        LEFT JOIN SYS_ROLE role ON obj.ROLE_ID = role.ID
+        WHERE obj.USER_ID = #{userId}
+    </select>
+    
+    <sql id="dy_where">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="null != id and '' != id">
+                AND obj.ID = #{id}
+            </if>
+            <if test="null != name and '' != name">
+                AND obj.NAME like "%"#{name}"%"
+            </if>
+            <if test="null != pwd and '' != pwd">
+                AND obj.PWD = #{pwd}
+            </if>
+            <if test="null != creator and '' != creator">
+                AND obj.CREATOR = #{creator}
+            </if>
+            <if test="null != startTime and ''!= startTime">
+                <![CDATA[
+                    AND obj.CREATE_TIME >= #{startTime}
+                 ]]>
+            </if>
+            <if test="null != endTime and ''!= endTime">
+                <![CDATA[
+                    AND obj.CREATE_TIME <= #{endTime}
+                 ]]>
+            </if>
+            <if test="null != activeBeginDate">
+                AND obj.ACTIVE_BEGIN_DATE = #{activeBeginDate}
+            </if>
+            <if test="null != activeEndDate">
+                AND obj.ACTIVE_END_DATE = #{activeEndDate}
+            </if>
+            <if test="null != phone and '' != phone">
+                AND obj.PHONE like "%"#{phone}"%"
+            </if>
+            <if test="null != email and '' != email">
+                AND obj.EMAIL like "%"#{email}"%"
+            </if>
+            <if test="null != isEnabled">
+                AND obj.IS_ENABLED = #{isEnabled}
+            </if>
+            <if test="null != roleId">
+                AND sur.ROLE_ID = #{roleId}
+            </if>
+            <if test="null != sqlFilter and '' != sqlFilter">
+                ${sqlFilter}
+            </if>
+            <if test="null != search and '' != search">
+                AND (obj.ID LIKE '%${search}%' OR obj.NAME LIKE '%${search}%'
+                OR obj.PHONE LIKE '%${search}%' OR obj.EMAIL LIKE '%${search}%')
+            </if>
+            <if test="null != areaCode and '' != areaCode">
+                AND ad.AREA_CODE like '${areaCode}%'
+            </if>
+            
+            <if test="null != adcd and '' != adcd ">
+                AND obj.ADCD LIKE '${adcd}%'
+            </if>
+            <if test="null != adcdFucczy and '' != adcdFucczy">
+                AND obj.ADCD like '${adcdFucczy}%'
+            </if>
+            
+        </trim>
+    </sql>
+
+</mapper>

@@ -1,0 +1,18 @@
+{
+	"topic": "plat/10001/rtu_hcs_yjgb_std",
+	"action": "yjgb_play_warn",
+	"source": "rtu_hcs_yjgb_std",
+	"sn": "6202010001",
+	"deliveryTime": "2018-05-10 03:06:40",
+	"version": "1.0",
+	"cmd": "",
+	"cmdId": "1",
+	"contentType": "json",
+	"content": {
+		"sendType": "gprs",
+		"playRandom": "1234",
+		"playNum": "12",
+		"playInterval": "3",
+		"playContent": "31 00 61 00 60 4F 7D 59"
+	}
+}

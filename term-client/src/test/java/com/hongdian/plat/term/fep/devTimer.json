@@ -1,0 +1,12 @@
+{
+    "topic": "fep/10001/fep_itss_comm",
+    "action": "dev.timer",
+    "source": "fep_itss_comm",
+    "sn": "6202010001",
+    "deliveryTime": "2018-05-16 18:28:46",
+    "version": "1.0",
+    "cmd": "",
+    "cmdId": "",
+    "contentType": "json",
+    "content": "{\"time\":\"2018-05-13 15:37:09\",\"amplifierStatus\":\"2\",\"batteryStatus\":\"0\",\"cameraSensor\":\"1\",\"devVoltage\":\"11.88\",\"doorStatus\":\"0\",\"morkStatus\":\"1\",\"network\":\"0\",\"orporation\":\"0\",\"powerType\":\"1\",\"rainSensor\":\"0\",\"signal\":\"1\",\"sim\":\"2147483647\",\"solarpanels\":\"0.00\",\"systemStatus\":\"0\",\"voltage\":\"0.00\",\"waterSensor\":\"1\",\"sendType\":\"gprs\"}"
+}

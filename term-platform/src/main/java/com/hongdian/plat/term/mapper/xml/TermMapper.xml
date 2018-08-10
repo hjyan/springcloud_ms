@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.plat.term.mapper.TermMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.hongdian.plat.term.entity.Term">
+		<id column="SN" property="sn" />
+		<result column="NAME" property="name" />
+		<result column="ALIAS" property="alias" />
+		<result column="PID" property="pid" />
+		<result column="SUPPLIER" property="supplier" />
+		<result column="APP_VERSION" property="appVersion" />
+		<result column="SOFT_VERSION" property="softVersion" />
+		<result column="HARD_VERSION" property="hardVersion" />
+		<result column="USE_TIME" property="useTime" />
+		<result column="TERM_TYPE_ID" property="termTypeId" />
+		<result column="TERM_STD_ID" property="termStdId" />
+		<result column="TERM_MODEL" property="termModel" />
+		<result column="TERM_VERSION" property="termVersion" />
+		<result column="REMARK" property="remark" />
+		<result column="STATION_ID" property="stationId" />
+		<result column="EXT_TWO" property="extTwo" />
+	</resultMap>
+	
+	<resultMap id="DtoResultMap" type="com.hongdian.plat.term.dto.TermDto" extends="BaseResultMap">
+		<!--termLocation-->
+		<result column="LOCATION" property="termLocation.location" />
+		<result column="LONGITUDE" property="termLocation.longitude" />
+		<result column="LATITUDE" property="termLocation.latitdue" />
+		<!--termType-->
+		<result column="TERM_TYPE_ID" property="termType.id" />
+		<result column="TERM_TYPE_NAME" property="termType.name" />
+		<!--termVersion-->
+		<result column="TERM_VERSION_ID" property="termV.id" />
+		<result column="TERM_VERSION_NAME" property="termV.name" />
+		<result column="TERM_VERSION_DESCRIPTION" property="termV.description" />
+		<!--termModel-->
+		<result column="TERM_MODEL_ID" property="termM.id" />
+		<result column="TERM_MODEL_NAME" property="termM.name" />
+		<result column="TERM_MODEL_DESCRIPTION" property="termM.description" />
+		<!--termStd-->
+		<result column="TERM_STD_ID" property="termStd.id" />
+		<result column="TERM_STD_NAME" property="termStd.name" />
+		<!--termHeader-->
+		<result column="ONLINE_STATE" property="termHeader.onlineState" />
+		<result column="SOURCE_BIZ" property="termHeader.sourceBiz" />
+		<result column="SOURCE_OPS" property="termHeader.sourceOps" />
+		<result column="CONNECT_TYPE" property="termHeader.connectType" />
+		<result column="IP" property="termHeader.ip" />
+		<result column="PORT" property="termHeader.port" />
+		<result column="PARAM_VERSION" property="termHeader.paramVersion" />
+		<result column="LAST_LOGIN_TIME" property="termHeader.lastLoginTime" />
+		<result column="LAST_LOGOUT_TIME" property="termHeader.lastLogoutTime" />
+	</resultMap>
+
+	<select id="selectTermDtoByStationId" parameterType="java.util.HashMap" resultMap="DtoResultMap" resultType="com.hongdian.plat.term.dto.TermDto">
+		select obj.* ,
+		tm.id TERM_MODEL_ID, tm.name TERM_MODEL_NAME, tm.description TERM_MODEL_DESCRIPTION,
+		tt.id TERM_TYPE_ID, tt.name TERM_TYPE_NAME,
+		ts.id TERM_STD_ID, ts.name TERM_STD_NAME,
+		tv.id TERM_MODEL_ID, tv.name TERM_VERSION_NAME, tv.description TERM_VERSION_DESCRIPTION,
+		tl.location, tl.longitude, tl.latitude,
+		th.online_state,th.SOURCE_BIZ,th.SOURCE_OPS,th.CONNECT_TYPE,th.IP,th.PORT, th.PARAM_VERSION, th.last_login_time, th.last_logout_time
+		from term obj
+		left join TERM_MODEL tm on obj.sn = tm.id
+		left join TERM_TYPE tt on obj.sn = tt.id
+		left join TERM_STD ts on  obj.sn = ts.id
+		left join TERM_VERSION tv on  obj.sn = tv.id
+		left join TERM_LOCATION tl on  obj.sn = tl.term_sn
+		left join TERM_HEADER th on  obj.sn = th.term_sn
+		where obj.station_id = #{stationId}
+	</select>
+    
+	<select id="getTermsList" parameterType="java.util.HashMap" resultMap="BaseResultMap" resultType="com.hongdian.plat.term.entity.Term">
+		select * from term t
+	</select>
+</mapper>

@@ -1,0 +1,9 @@
+{
+	"topic": "fep/10001/rtu_hcs_yjgb",
+	"action": "fep.msg.ack",
+	"source": "rtu_hcs_yjgb",
+	"deliveryTime": "2018-07-24 15:04:49",
+	"version": "1.0",
+	"contentType": "json",
+	"content": "{\"topic\":\"plat.10001.rtu_hcs_yjgb\",\"action\":\"fep.login\",\"source\":\"\",\"sn\":\"\",\"deliveryTime\":\"2018-07-24 03:05:04\",\"version\":\"1.0\",\"cmd\":\"\",\"cmdId\":\"\",\"contentType\":\"json\",\"content\":\"\"}"
+}

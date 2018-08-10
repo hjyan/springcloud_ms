@@ -1,0 +1,15 @@
+{
+	"topic": "plat/10001/fep_itss_comm",
+	"action": "start_main_upgrade",
+	"source": "core.devmgnt",
+	"sn": "6202010001",
+	"deliveryTime": "2018-05-10 03:06:40",
+	"version": "1.0",
+	"cmd": "",
+	"cmdId": "1",
+	"contentType": "json",
+	"content": {
+		"fileName": "H5110_APP_V4.01.01_V3_1803271559.bin",
+		"version": "V2"
+	}
+}

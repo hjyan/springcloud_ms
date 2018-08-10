@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.plat.term.mapper.TermParamGroupMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.hongdian.plat.term.entity.TermParamGroup">
+		<id column="ID" property="id" />
+		<result column="GROUP_ID" property="groupId" />
+		<result column="NAME" property="name" />
+		<result column="TERM_TYPE_ID" property="termTypeId" />
+		<result column="TERM_MODEL_ID" property="termModelId" />
+		<result column="TERM_VER_ID" property="termVerId" />
+		<result column="PID" property="pid" />
+		<result column="STATUS" property="status" />
+		<result column="EXPAND" property="expand" />
+	</resultMap>
+
+</mapper>

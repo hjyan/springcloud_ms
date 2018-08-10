@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.sys.auth.mapper.SysDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hongdian.sys.auth.entity.SysDict">
+        <id column="ID" property="id" />
+        <result column="PID" property="pid" />
+        <result column="ODR" property="odr" />
+        <result column="TYPE_ID" property="typeId" />
+        <result column="LABEL" property="label" />
+        <result column="VAL" property="val" />
+    </resultMap>
+
+</mapper>

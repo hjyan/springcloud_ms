@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.plat.term.mapper.TermStatusMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.hongdian.plat.term.entity.TermStatus">
+		<id column="TERM_SN" property="termSn" />
+		<result column="STATUS_ID" property="statusId" />
+		<result column="STATUS_VALUE" property="statusValue" />
+		<result column="EXT" property="ext" />
+	</resultMap>
+	
+	<resultMap id="DtoResultMap" type="com.hongdian.plat.term.dto.TermStatusDto">
+		<id column="TERM_SN" property="termSn" />
+		<result column="status_values" property="statusValues" />
+		<result column="status_names" property="statusNames" />
+		<result column="status_descs" property="statusDescs" />
+	</resultMap>
+	
+	<resultMap id="ExtendResultMap" extends="BaseResultMap" type="com.hongdian.plat.term.dto.TermStatusExtend">
+		<result column="status_name" property="desc.name" />
+		<result column="status_desc" property="desc.description" />
+	</resultMap>
+	
+	<select id="selectTermStatusDtoList" parameterType="java.util.HashMap" resultMap="DtoResultMap" resultType="com.hongdian.plat.term.dto.TermStatusDto">
+		SELECT obj.term_sn ,GROUP_CONCAT(obj.status_value) status_values,
+		GROUP_CONCAT(tsd.id) status_ids,  GROUP_CONCAT(tsd.NAME) status_names, GROUP_CONCAT(tsd.DESCRIPTION) status_descs
+		FROM term_status obj
+		left join term_status_desc tsd on tsd.id = obj.status_id
+		<include refid="dy_where" />
+		GROUP BY obj.term_sn
+	</select>
+	
+	<select id="selectTermStatusList" parameterType="java.util.HashMap" resultMap="ExtendResultMap" resultType="com.hongdian.plat.term.dto.TermStatusExtend">
+		SELECT obj.* , tsd.name status_name, tsd.description status_desc from term_status obj
+		LEFT JOIN term_status_desc tsd on tsd.id = obj.STATUS_ID
+		LEFT JOIN term_type_status tst on tst.status_id = obj.status_id
+		<include refid="dy_where_sub" />
+	</select>
+	
+	<sql id="dy_where">
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="null != termSn and '' != termSn">
+				AND obj.TERM_SN = #{termSn}
+			</if>
+			<if test="null != statusIdList">
+				AND obj.status_id IN
+				<foreach collection="statusIdList" item="item" index="index" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="null != termSnList and null != termSnList">
+				AND obj.term_sn IN
+				<foreach collection="termSnList" item="item" index="index" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="null != sqlFilter and '' != sqlFilter">
+				AND ${sqlFilter}
+			</if>
+		</trim>
+	</sql>
+	<sql id="dy_where_sub">
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="null != termSn and '' != termSn">
+				AND obj.TERM_SN = #{termSn}
+			</if>
+			<if test="null != termType and '' != termType">
+				AND tst.TERM_TYPE_ID = #{termType}
+			</if>
+			<if test="null != statusName and null != statusValueCondition">
+				AND tsd.name = #{statusName} AND obj.status_value ${statusValueCondition}
+			</if>
+		</trim>
+	</sql>
+
+</mapper>

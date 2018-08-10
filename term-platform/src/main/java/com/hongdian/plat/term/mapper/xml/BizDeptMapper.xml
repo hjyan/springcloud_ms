@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongdian.plat.term.mapper.BizDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hongdian.plat.term.entity.BizDept">
+        <id column="ID" property="id" />
+        <result column="PID" property="pid" />
+        <result column="NAME" property="name" />
+        <result column="POPULATION" property="population" />
+        <result column="HOUSEHOLDS" property="households" />
+        <result column="OUTFLOWPOPULATION" property="outflowpopulation" />
+        <result column="HOUSES" property="houses" />
+        <result column="FARMLAND" property="farmland" />
+        <result column="FLOODHOUSEHOLDS" property="floodhouseholds" />
+        <result column="FLOODHOUSES" property="floodhouses" />
+    </resultMap>
+
+    <select id="getBizDeptList" parameterType="java.util.HashMap" resultMap="BaseResultMap" resultType="com.hongdian.plat.term.entity.BizDept">
+        select * from biz_dept t
+    </select>
+</mapper>

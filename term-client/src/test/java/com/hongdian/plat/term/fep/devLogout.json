@@ -1,0 +1,12 @@
+{
+	"topic": "fep/10004/fep_itss_comm",
+	"action": "dev.logout",
+	"source": "fep_itss_comm",
+	"sn": "0020160912",
+	"deliveryTime": "2018-05-21 08:37:13",
+	"version": "1.0",
+	"cmd": "",
+	"cmdId": "",
+	"contentType": "json",
+	"content": "{\"time\":\"2018-05-21 08:37:13\",\"total_flow\":\"\",\"flag\":\"0\"}"
+}

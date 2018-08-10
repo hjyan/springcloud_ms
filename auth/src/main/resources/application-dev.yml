@@ -1,0 +1,81 @@
+spring:
+  redis:
+    host: 172.16.22.249
+    port: 6379
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 5
+  application:
+    name: auth-service
+  zipkin:
+    base-url: http://localhost:9411
+    service:
+      name: ${spring.application.name}
+  datasource: 
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    url: jdbc:mysql://172.16.22.249:3316/7760_auth?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: sa
+    driver-class-name: com.mysql.jdbc.Driver
+management:
+  security:
+    enabled: false
+jwt: 
+  expireTime: 1800000
+  pubKeyPath: D:\springcloud\keyfile\pubKey.key
+  priKeyPath: D:\springcloud\keyfile\priKey.key
+    
+logging:
+  level:
+    neo: INFO
+    
+server:
+  port: 20090
+  servlet:
+    context-path: /
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:20080/eureka/
+    registry-fetch-interval-seconds: 3
+    
+#mybatis:
+#  mapper-locations: classpath:mapping/oracle/*.xml
+#  type-aliases-package: com.hongdian.sys.auth.entity
+
+mybatis-plus:
+  mapper-locations: classpath:com/hongdian/sys/auth/mapper/xml/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.hongdian.sys.auth.entity
+  typeHandlersPackage: com.ithings.xw.mybatis.handler
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+    #逻辑删除配置（下面3个配置）
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    #自定义填充策略接口实现
+    #meta-object-handler: com.ithings.iam.xxx
+    #自定义SQL注入器
+    #sql-injector: com.ithings.iam.xxx
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: 'null'
+  
+debug: true

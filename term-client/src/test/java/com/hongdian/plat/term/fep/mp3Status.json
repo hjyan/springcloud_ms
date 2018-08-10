@@ -1,0 +1,12 @@
+{
+	"topic": "fep/10001/rtu_hcs_yjgb_std",
+	"action": "yjgb.mp3.status",
+	"source": "rtu_hcs_yjgb_std",
+	"sn": "6202010001",
+	"deliveryTime": "2018-05-16 18:28:46",
+	"version": "1.0",
+	"cmd": "",
+	"cmdId": "",
+	"contentType": "json",
+	"content": "{\"time\":\"2018-05-13 15:37:09\",\"playRandom\":\"1234\",\"fileType\":\"NORMAL1\",\"sendType\":\"gprs\"}"
+}

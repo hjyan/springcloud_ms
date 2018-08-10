@@ -79,6 +79,5 @@
 		<module>auth</module>
 		<module>zuul</module>
 		<module>eureka</module>
-		<module>term-server</module>
 	</modules>
 </project>
